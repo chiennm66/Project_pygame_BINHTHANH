@@ -52,6 +52,18 @@ def check_win(score):
         return True
     return False
 
+def check_lose(x1, y1, x3, y3, size1=50, size3=100):
+    rect1 = pygame.Rect(x1, y1, size1, size1)
+    rect3 = pygame.Rect(x3, y3, size3, size3)
+    if rect1.colliderect(rect3):
+        lose_font = pygame.font.SysFont(None, 80)
+        lose_text = lose_font.render("LOSE", True, (255, 0, 0))
+        WINDOW.blit(lose_text, (WIDTH // 2 - lose_text.get_width() // 2, HEIGHT // 2 - lose_text.get_height() // 2))
+        pygame.display.flip()
+        pygame.time.delay(2000)  # Hiển thị 2 giây
+        return True
+    return False
+
 running = True
 
 while running:
@@ -117,6 +129,10 @@ while running:
 
     # Kiểm tra win
     if check_win(score):
+        break
+
+    # Kiểm tra thua
+    if check_lose(x1, y1, x3, y3, size1, 100):
         break
 
     pygame.display.flip()
