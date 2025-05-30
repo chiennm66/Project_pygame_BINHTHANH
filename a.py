@@ -27,9 +27,6 @@ x1, y1 = 0, 0
 x2, y2 = 100, 100
 x3, y3 = 200, 200
 
-obstacle_last_move = time.time()  # Thời gian lần cuối chướng ngại vật di chuyển
-obstacle_interval = 2  # Thời gian giữa các lần di chuyển (giây)
-
 
 FPS = 60
 clock = pygame.time.Clock()
@@ -50,18 +47,6 @@ def check_win(score):
         win_font = pygame.font.SysFont(None, 80)
         win_text = win_font.render("YOU WON", True, (0, 0, 255))
         WINDOW.blit(win_text, (WIDTH // 2 - win_text.get_width() // 2, HEIGHT // 2 - win_text.get_height() // 2))
-        pygame.display.flip()
-        pygame.time.delay(2000)  # Hiển thị 2 giây
-        return True
-    return False
-
-def check_lose(x1, y1, x3, y3, size1=50, size3=100):
-    rect1 = pygame.Rect(x1, y1, size1, size1)
-    rect3 = pygame.Rect(x3, y3, size3, size3)
-    if rect1.colliderect(rect3):
-        lose_font = pygame.font.SysFont(None, 80)
-        lose_text = lose_font.render("LOSE", True, (255, 0, 0))
-        WINDOW.blit(lose_text, (WIDTH // 2 - lose_text.get_width() // 2, HEIGHT // 2 - lose_text.get_height() // 2))
         pygame.display.flip()
         pygame.time.delay(2000)  # Hiển thị 2 giây
         return True
@@ -119,12 +104,6 @@ while running:
             y2 = random.randint(0, HEIGHT - 30)
             visible2 = True
 
-    # Chướng ngại vật di chuyển ngẫu nhiên sau mỗi 2 giây
-    if time.time() - obstacle_last_move >= obstacle_interval:
-        x3 = random.randint(0, WIDTH - 100)
-        y3 = random.randint(0, HEIGHT - 100)
-        obstacle_last_move = time.time()
-
     # Vẽ màn hình
     WINDOW.fill((255, 255, 255))
     WINDOW.blit(img1, (x1, y1))
@@ -138,10 +117,6 @@ while running:
 
     # Kiểm tra win
     if check_win(score):
-        break
-
-    # Kiểm tra thua
-    if check_lose(x1, y1, x3, y3, size1, 100):
         break
 
     pygame.display.flip()
