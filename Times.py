@@ -67,6 +67,25 @@ def check_lose(x1, y1, x3, y3, size1=50, size3=100):
         return True
     return False
 
+def show_menu():
+    menu_font = pygame.font.SysFont(None, 72)
+    button_font = pygame.font.SysFont(None, 48)
+    while True:
+        WINDOW.fill((200, 220, 255))
+        title_text = menu_font.render("PYGAME GAME", True, (0, 0, 128))
+        start_text = button_font.render("Press ENTER to Start", True, (0, 128, 0))
+        WINDOW.blit(title_text, (WIDTH // 2 - title_text.get_width() // 2, HEIGHT // 2 - 120))
+        WINDOW.blit(start_text, (WIDTH // 2 - start_text.get_width() // 2, HEIGHT // 2))
+        pygame.display.flip()
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN or event.key == pygame.K_SPACE:
+                    return
+
+show_menu()  # Gọi menu trước khi vào game
 running = True
 
 while running:
